@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kartu Stamp Bulanan — KitaStore</title>
+<title>Kartu Stamp Quest — Kita Store</title>
 
 <style>
 body {
@@ -159,6 +159,9 @@ footer {
 </div>
 
 <script>
+  const VERIFIER_URL = "https://script.google.com/macros/s/AKfycbxHY5uH87bR4ZmbDexxdC-0FmbrvpBZxiT3sKfSXGj4sw4xzDq0KLToDspPU6t2L46Ycg/exec";
+fetch(`${VERIFIER_URL}?code=${q}&nama=${encodeURIComponent(namaSd)}`)
+
 const months = [
   "Januari","Februari","Maret","April","Mei","Juni",
   "Juli","Agustus","September","Oktober","November","Desember"
@@ -202,7 +205,7 @@ async function autoStamp() {
 
   try {
     const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbz1TQcYdcT_aUkS0C6DRRzQyzjMJqF2jl5Qvc_H_mI542o0mJIxENmo3zuVbUMl_8VeHA/exec?code="+q
+      "https://script.google.com/macros/s/AKfycbxHY5uH87bR4ZmbDexxdC-0FmbrvpBZxiT3sKfSXGj4sw4xzDq0KLToDspPU6t2L46Ycg/exec"+q
     );
     const data = await res.json();
     if (!data.valid) {
@@ -225,13 +228,6 @@ async function autoStamp() {
 const namaSd = document.getElementById("namaSdInput");
 namaSd.value = localStorage.getItem("namaSd") || "";
 namaSd.addEventListener("input", ()=> localStorage.setItem("namaSd", namaSd.value));
-
-document.getElementById("resetBtn").onclick = () => {
-  if (confirm("Reset semua stamp?")) {
-    stamps = {};
-    save();
-    renderGrid();
-  }
 };
 
 renderGrid();
