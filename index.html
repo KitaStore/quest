@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quest Stamp Card</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .stamp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+    .box { border: 2px solid #ccc; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; }
+    .stamped { background: #4caf50; color: white !important; border-color: #4caf50; }
+    #progress { margin-top: 20px; height: 25px; background: #ddd; border-radius: 8px; overflow: hidden; }
+    #progress-inner { height: 100%; width: 0%; background: #4caf50; }
+    .input-field { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Kartu Stamp Bulanan</h2>  <div class="input-field">
+    <label>Nama SD:</label><br>
+    <input type="text" id="namaSD" placeholder="Masukkan nama..." />
+  </div>  <div class="stamp-grid" id="stampGrid"></div>  <div id="progress"><div id="progress-inner"></div></div>  <script>
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+
+    function loadStamps() {
+      const saved = localStorage.getItem("stamps");
+      return saved ? JSON.parse(saved) : Array(12).fill(false);
+    }
+
+    function saveStamps(stamps) {
+      localStorage.setItem("stamps", JSON.stringify(stamps));
+    }
+
+    function loadName() {
+      const n = localStorage.getItem("namaSD");
+      if (n) document.getElementById("namaSD").value = n;
+    }
+
+    document.getElementById("namaSD").addEventListener("input", e => {
+      localStorage.setItem("namaSD", e.target.value);
+    });
+
+    function render() {
+      const grid = document.getElementById("stampGrid");
+      grid.innerHTML = "";
+      stamps.forEach((s, i) => {
+        const box = document.createElement("div");
+        box.className = "box" + (s ? " stamped" : "");
+        box.textContent = monthNames[i];
+        grid.appendChild(box);
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const count = stamps.filter(s => s).length;
+      const pct = (count / 12) * 100;
+      document.getElementById("progress-inner").style.width = pct + "%";
+    }
+
+    function applyStampForCurrentMonth() {
+      const now = new Date();
+      const month = now.getMonth();
+      if (!stamps[month]) {
+        stamps[month] = true;
+        saveStamps(stamps);
+        render();
+        alert("Stamp bulan " + monthNames[month] + " berhasil!");
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const trigger = params.get("stamp");
+
+    let stamps = loadStamps();
+    render();
+    loadName();
+
+    if (trigger) applyStampForCurrentMonth();
+  </script></body>
+</html>
