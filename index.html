@@ -1,259 +1,242 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Quest Stamp Card — KitaStore</title>
-  <style>
-    :root{
-      --bg: #fff8f2;
-      --card: #fff;
-      --muted: #7b6e6a;
-      --accent: #f6c1c7; /* pastel pink */
-      --accent-2: #cde7d6; /* pastel green */
-      --accent-3: #f7e5c8; /* pastel yellow */
-      --stamp-color: #d9534f;
-    }
-    *{box-sizing:border-box}
-    body{font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial; background:var(--bg); color:#433; padding:20px}
-    header{display:flex;gap:12px;align-items:center}
-    h1{font-size:20px;margin:0}
-    p.lead{margin:6px 0 12px;color:var(--muted)}.card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(43,32,27,0.06)}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartu Stamp Bulanan — KitaStore</title>
 
-.input-row{display:flex;gap:10px;align-items:center}
-label{font-size:13px;color:var(--muted)}
-input[type=text]{padding:8px 10px;border-radius:8px;border:1px solid #eee;flex:1}
-
-.stamp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
-.box{height:84px;border-radius:10px;border:2px dashed rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;color:#3b3b3b;background:linear-gradient(180deg,#fff 0%, #fffefc 100%);position:relative;overflow:hidden}
-
-/* stamped state */
-.box.stamped{background:linear-gradient(180deg,var(--accent-2) 0%, #eaf6ee 100%);border-style:solid;border-color:rgba(0,0,0,0.06);color:#fff}
-
-/* stamp icon overlay */
-.stamp-mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(0.6);}
-.box.stamped .stamp-mark{opacity:1;transform:scale(1);}
-
-/* pop animation */
-@keyframes pop {
-  0%{transform:scale(0.6);opacity:0}
-  60%{transform:scale(1.08);opacity:1}
-  100%{transform:scale(1);opacity:1}
+<style>
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fff7fa;
+  color: #725b63;
+  margin: 0;
+  padding: 20px;
 }
-.box.stamped .stamp-mark svg{animation:pop .45s cubic-bezier(.2,.9,.3,1)}
 
-/* progress */
-.progress-wrap{margin-top:18px;display:flex;flex-direction:column;gap:8px}
-.progress{height:14px;background:#f0efe8;border-radius:999px;overflow:hidden}
-.progress-inner{height:100%;width:0%;background:linear-gradient(90deg,var(--accent) 0%, var(--accent-3) 100%);transition:width 500ms ease}
-.progress-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  max-width: 420px;
+  margin: auto;
+}
 
-.rewards{display:flex;gap:10px;margin-top:10px}
-.reward-pill{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,0.04);font-weight:600;color:var(--muted)}
-.reward-pill.active{background:var(--accent-2);color:#1b442b;border-color:transparent}
+.title {
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #d86b94;
+}
 
-.actions{display:flex;gap:8px;margin-top:12px}
-button{padding:8px 12px;border-radius:10px;border:0;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.04);cursor:pointer}
-button.warn{background:#ffd6d6}
+/* GRID */
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
 
-footer{margin-top:16px;font-size:12px;color:var(--muted)}
+.stamp-box {
+  width: 80px;
+  height: 80px;
+  background: #fff0f6;
+  border: 2px dashed #e3a6b6;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 13px;
+}
 
-  </style>
+.stamp-box img.stamp {
+  width: 50px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 0.25s ease-out;
+}
+
+.stamp-box img.pop {
+  opacity: 1;
+  transform: scale(1.1);
+  animation: popAnim 0.25s ease-out;
+}
+
+@keyframes popAnim {
+  0% { transform: scale(0.3); opacity: 0; }
+  80% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Progress Bar */
+.progress-wrap {
+  margin-top: 20px;
+}
+
+.progress {
+  width: 100%;
+  height: 20px;
+  background: #ffe2ee;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-inner {
+  width: 0%;
+  height: 100%;
+  background: #ff9fbe;
+  transition: width 0.3s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  background: #ff9fbe;
+  color: white;
+  font-weight: bold;
+}
+
+button.warn {
+  background: #ff6b6b;
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+</style>
 </head>
-<body>
-  <header>
-    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%23F6C1C7'/><text x='12' y='16' font-size='10' text-anchor='middle' fill='%23433'>KS</text></svg>" alt="logo" style="width:44px;height:44px;border-radius:8px;"/>
-    <div>
-      <h1>Kartu Stamp Bulanan — KitaStore</h1>
-      <p class="lead">Scan QR di toko. Satu QR cukup — sistem otomatis mengisi bulan menurut tanggal saat discan.</p>
-    </div>
-  </header>  <div class="card">
-    <div class="input-row">
-      <div style="flex:1">
-        <label for="namaSD">Nama SD</label>
-        <input id="namaSD" type="text" placeholder="Masukkan nama sekolah / nama..." />
-      </div>
-      <div style="width:160px; text-align:right">
-        <label>Stempel Sekarang</label>
-        <div style="font-weight:700; color:var(--stamp-color)" id="currentMonthLabel">-</div>
-      </div>
-    </div><div class="stamp-grid" id="stampGrid"></div>
 
-<div class="progress-wrap">
-  <div class="progress-meta"><div id="progressText">0 / 12</div><div id="rewardCount">0 rewards active</div></div>
-  <div class="progress"><div class="progress-inner" id="progressInner"></div></div>
-  <div class="rewards" id="rewardsRow"></div>
-  <div class="actions"><button id="resetBtn" class="warn">Reset</button><button id="helpBtn">Cara Pakai</button></div>
+<body>
+
+<div class="card">
+
+  <h2 class="title">Kartu Stamp Bulanan — KitaStore</h2>
+
+  <label>Nama SD:</label>
+  <input id="namaSdInput" type="text" style="width:100%;padding:10px;margin-bottom:15px;border-radius:10px;border:1px solid #dfbccc;">
+
+  <div class="stamp-grid" id="stampGrid"></div>
+
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <div id="progressText">0 / 12</div>
+      <div id="rewardCount">0 rewards active</div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-inner" id="progressInner"></div>
+    </div>
+
+    <div class="rewards" id="rewardsRow"></div>
+
+    <div class="actions">
+      <button id="resetBtn" class="warn">Reset</button>
+      <button id="helpBtn">Cara Pakai</button>
+    </div>
+  </div>
+
+  <footer>
+    Waktu untuk menentukan bulan berasal dari server agar tidak bisa dimanipulasi. 
+    Jika server gagal, digunakan waktu perangkat.
+  </footer>
 </div>
 
-<footer>Waktu yang dipakai untuk menentukan bulan diambil dari server waktu untuk menghindari manipulasi waktu lokal. Jika koneksi gagal, halaman akan menggunakan waktu perangkat (dengan peringatan).</footer>
+<script>
+const months = [
+  "Januari","Februari","Maret","April","Mei","Juni",
+  "Juli","Agustus","September","Oktober","November","Desember"
+];
 
-  </div>  <script>
-    // --- helper cookie functions ---
-    function setCookie(name, value, days){
-      const d = new Date(); d.setTime(d.getTime() + days*24*60*60*1000);
-      document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d.toUTCString() + ";path=/";
-    }
-    function getCookie(name){
-      const v = document.cookie.match('(?:^|;)\s*' + name + '\s*=\s*([^;]+)');
-      return v ? decodeURIComponent(v[1]) : '';
-    }
+let stamps = JSON.parse(localStorage.getItem("stamps") || "{}");
 
-    const monthNames = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+function save() { localStorage.setItem("stamps", JSON.stringify(stamps)); }
 
-    // --- state ---
-    let stamps = JSON.parse(localStorage.getItem('ks_stamps_v1') || '[]');
-    if (!Array.isArray(stamps) || stamps.length !== 12) stamps = Array(12).fill(false);
+function renderGrid() {
+  const grid = document.getElementById("stampGrid");
+  grid.innerHTML = "";
 
-    // render grid
-    const gridEl = document.getElementById('stampGrid');
-    function renderGrid(){
-      gridEl.innerHTML = '';
-      stamps.forEach((s,i)=>{
-        const div = document.createElement('div');
-        div.className = 'box' + (s ? ' stamped' : '');
-        div.dataset.month = i;
-        div.innerHTML = `<div style="z-index:2">${monthNames[i].substr(0,3)}</div>` +
-                        (s ? `<div class="stamp-mark">${stampSVG()}</div>` : `<div class="stamp-mark" aria-hidden="true">${stampSVG()}</div>`);
-        gridEl.appendChild(div);
-      });
-      updateProgress();
-    }
+  months.forEach((m,i)=>{
+    const box = document.createElement("div");
+    box.className = "stamp-box";
+    box.textContent = m;
 
-    function stampSVG(){
-      // simple circular stamp icon (inline svg)
-      return `<svg width="80" height="80" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="${encodeURIComponent('#b23a3a').replace(/%23/g,'%23')}" stroke-width="2"><circle cx="32" cy="32" r="22" fill="${encodeURIComponent('#ffdcdc').replace(/%23/g,'%23')}" stroke-opacity="0.6"/></g><text x="32" y="38" font-size="16" font-weight="700" text-anchor="middle" fill="#b23a3a">STAMP</text></svg>`;
-    }
+    const img = document.createElement("img");
+    img.src = "stamp.png";  // ganti dengan ikonmu
+    img.className = "stamp";
 
-    function updateProgress(){
-      const count = stamps.filter(Boolean).length;
-      document.getElementById('progressText').textContent = `${count} / 12`;
-      const pct = Math.round((count/12)*100);
-      document.getElementById('progressInner').style.width = pct + '%';
+    if (stamps[i]) img.classList.add("pop");
+    box.appendChild(img);
+    grid.appendChild(box);
+  });
 
-      // rewards every 3 stamps (4 rewards total)
-      const rewardsEl = document.getElementById('rewardsRow');
-      rewardsEl.innerHTML = '';
-      for(let i=1;i<=4;i++){
-        const pill = document.createElement('div');
-        pill.className = 'reward-pill'+(count >= i*3 ? ' active' : '');
-        pill.textContent = `x${i*3}`;
-        rewardsEl.appendChild(pill);
-      }
-      document.getElementById('rewardCount').textContent = `${Math.floor(count/3)} rewards active`;
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(stamps).length;
+  document.getElementById("progressText").textContent = `${count} / 12`;
+  document.getElementById("progressInner").style.width = (count/12)*100 + "%";
+  document.getElementById("rewardCount").textContent = `${Math.floor(count/3)} rewards active`;
+}
+
+async function autoStamp() {
+  const q = new URL(location.href).searchParams.get("code");
+  if (!q) return;
+
+  try {
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbz1TQcYdcT_aUkS0C6DRRzQyzjMJqF2jl5Qvc_H_mI542o0mJIxENmo3zuVbUMl_8VeHA/exec?code="+q
+    );
+    const data = await res.json();
+    if (!data.valid) {
+      alert("QR tidak valid.");
+      return;
     }
 
-    // reset
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      if(confirm('Reset semua stamp?')){
-        stamps = Array(12).fill(false);
-        localStorage.setItem('ks_stamps_v1', JSON.stringify(stamps));
-        renderGrid();
-      }
-    });
+    const now = new Date();
+    const month = now.getMonth();
 
-    document.getElementById('helpBtn').addEventListener('click', ()=>{
-      alert('Cara pakai:
-1) Scan QR di toko.
-2) Jika koneksi tersedia, waktu server akan menentukan bulan yang distamp.
-3) Nama SD tersimpan otomatis.
-4) Reward aktif setiap 3 stamp.');
-    });
-
-    // --- name (cookie) bind ---
-    const nameInput = document.getElementById('namaSD');
-    const savedName = getCookie('ks_namaSD');
-    if(savedName) nameInput.value = savedName;
-    nameInput.addEventListener('input', e=> setCookie('ks_namaSD', e.target.value, 365));
-
-    // --- get server time to avoid device-time manipulation ---
-    // We'll try a public time API (worldtimeapi.org). If it fails, fallback to device time with warning.
-    async function getReliableNow(){
-      try{
-        const resp = await fetch('https://worldtimeapi.org/api/ip',{cache:'no-store'});
-        if(!resp.ok) throw new Error('no');
-        const data = await resp.json();
-        // data.datetime like '2025-11-20T12:34:56.123456+07:00'
-        return new Date(data.datetime);
-      }catch(e){
-        // fallback: device time
-        console.warn('Time API failed, using device time');
-        alert('Peringatan: tidak dapat mengambil waktu server. Menggunakan waktu perangkat — ini bisa dimanipulasi.');
-        return new Date();
-      }
+    if (!stamps[month]) {
+      stamps[month] = true;
+      save();
+      renderGrid();
     }
+  } catch(e) { console.log("ERR:", e); }
+}
 
-    // apply stamp for the month according to reliable time
-    async function applyStampForCurrentMonth(){
-      const now = await getReliableNow();
-      const month = now.getMonth();
-      document.getElementById('currentMonthLabel').textContent = monthNames[month];
-      if(!stamps[month]){
-        stamps[month] = true;
-        localStorage.setItem('ks_stamps_v1', JSON.stringify(stamps));
-        renderGrid();
-        // small visual: find the box and flash
-        const box = gridEl.querySelector(`[data-month='${month}']`);
-        if(box) box.classList.add('stamped');
-      } else {
-        alert('Stamp bulan ' + monthNames[month] + ' sudah terisi.');
-      }
-    }
+// Nama SD → cookie
+const namaSd = document.getElementById("namaSdInput");
+namaSd.value = localStorage.getItem("namaSd") || "";
+namaSd.addEventListener("input", ()=> localStorage.setItem("namaSd", namaSd.value));
 
-    // on load render
+document.getElementById("resetBtn").onclick = () => {
+  if (confirm("Reset semua stamp?")) {
+    stamps = {};
+    save();
     renderGrid();
+  }
+};
 
-    // if URL contains ?stamp=1 (or any value) then trigger stamping using server time
-    const params = new URLSearchParams(location.search);
-    if(params.has('stamp')){
-      // run but don't block rendering
-      applyStampForCurrentMonth();
-    }
+renderGrid();
+autoStamp();
+</script>
 
-    // expose for debug
-    window.__ks = {applyStampForCurrentMonth};
-  
-    // ---- Logging to Google Sheet ----
-    const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1TQcYdcT_aUkS0C6DRRzQyzjMJqF2jl5Qvc_H_mI542o0mJIxENmo3zuVbUMl_8VeHA/exec";
-
-    function generateChecksum(month){
-      const rand = Math.random().toString(36).substr(2,5).toUpperCase();
-      const year = new Date().getFullYear();
-      return month.substr(0,3).toUpperCase() + "-" + year + "-" + rand;
-    }
-
-    async function sendLogToSheet(nama, bulan){
-      const payload = {
-        nama: nama || "(no name)",
-        bulan: bulan,
-        device: navigator.userAgent,
-        checksum: generateChecksum(bulan)
-      };
-      try{
-        await fetch(LOG_ENDPOINT, {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(payload)
-        });
-      }catch(e){ console.warn("Log gagal dikirim, offline?"); }
-    }
-
-    // Modify stamp application to include logging
-    const _oldApply = applyStampForCurrentMonth;
-    applyStampForCurrentMonth = async function(){
-      const now = await getReliableNow();
-      const month = now.getMonth();
-      const monthName = monthNames[month];
-      document.getElementById('currentMonthLabel').textContent = monthName;
-
-      if(!stamps[month]){
-        stamps[month] = true;
-        localStorage.setItem('ks_stamps_v1', JSON.stringify(stamps));
-        renderGrid();
-        const nama = document.getElementById('namaSD').value.trim();
-        sendLogToSheet(nama, monthName);
-      } else {
-        alert('Stamp bulan ' + monthName + ' sudah terisi.');
-      }
-    }
-</script></body>
+</body>
 </html>
