@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stamp Card 12 Months</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f8f8f8;
+  }
+  h1 {
+    text-align: center;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .box {
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .box.stamped {
+    background: #4caf50;
+    color: white;
+    border-color: #4caf50;
+  }
+  .progress {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+  }
+  .bar-bg {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #4caf50;
+  }
+</style>
+</head>
+<body>
+<h1>Stamp Card 12 Bulan</h1>
+<p>Scan QR untuk mengisi stamp bulan yang sesuai.</p><div class="grid" id="grid"></div><div class="progress">
+  <strong>Progress:</strong> <span id="progressText">0 / 12</span>
+  <div class="bar-bg">
+    <div class="bar-fill" id="barFill"></div>
+  </div>
+  <p id="rewardText">Reward aktif tiap 3 stamp.</p>
+</div><script>
+const months = [
+  "Januari", "Februari", "Maret", "April",
+  "Mei", "Juni", "Juli", "Agustus",
+  "September", "Oktober", "November", "Desember"
+];
+
+const grid = document.getElementById("grid");
+let stamps = JSON.parse(localStorage.getItem("stamps12")) || {};
+
+function renderGrid() {
+  grid.innerHTML = "";
+  months.forEach((m, i) => {
+    const box = document.createElement("div");
+    box.className = "box" + (stamps[i] ? " stamped" : "");
+    box.textContent = m;
+    grid.appendChild(box);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(stamps).length;
+  document.getElementById("progressText").textContent = count + " / 12";
+
+  const percentage = (count / 12) * 100;
+  document.getElementById("barFill").style.width = percentage + "%";
+
+  const rewards = Math.floor(count / 3);
+  document.getElementById("rewardText").textContent =
+    `Reward aktif: ${rewards} dari 4 (setiap 3 stamp)`;
+}
+
+// Fungsi pemroses QR content
+function applyStamp(code) {
+  const map = {
+    "STAMP-JAN": 0,
+    "STAMP-FEB": 1,
+    "STAMP-MAR": 2,
+    "STAMP-APR": 3,
+    "STAMP-MAY": 4,
+    "STAMP-JUN": 5,
+    "STAMP-JUL": 6,
+    "STAMP-AUG": 7,
+    "STAMP-SEP": 8,
+    "STAMP-OCT": 9,
+    "STAMP-NOV": 10,
+    "STAMP-DEC": 11
+  };
+
+  if (map[code] !== undefined) {
+    stamps[map[code]] = true;
+    localStorage.setItem("stamps12", JSON.stringify(stamps));
+    renderGrid();
+    alert("Stamp bulan " + months[map[code]] + " berhasil ditambahkan!");
+  } else {
+    alert("QR tidak valid.");
+  }
+}
+
+// Demo untuk testing manual di console: applyStamp("STAMP-JAN")
+renderGrid();
+</script></body>
+</html>
